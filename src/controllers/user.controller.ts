@@ -17,6 +17,9 @@ import {
   UserOutputDTO,
 } from "../dto/user.dto";
 
+
+import { checkPermissions } from "../middlewares/permissions";
+
 @Route("users")
 @Tags("Users")
 @Security("jwt")

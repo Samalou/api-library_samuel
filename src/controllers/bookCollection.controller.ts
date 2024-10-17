@@ -15,6 +15,9 @@ import {
   BookCollectionOutputDTO,
 } from "../dto/bookCollection.dto";
 import { bookCollectionService } from "../services/bookCollection.service";
+
+import { checkPermissions } from "../middlewares/permissions";
+
 @Route("book-collections")
 @Tags("BookCollections")
 export class BookCollectionController extends Controller {

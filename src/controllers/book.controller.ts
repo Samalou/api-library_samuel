@@ -17,6 +17,8 @@ import {
 import { bookService } from "../services/book.service";
 import { BookCollectionOutputDTO } from "../dto/bookCollection.dto";
 
+import { checkPermissions } from "../middlewares/permissions";
+
 @Route("books")
 @Tags("Books")
 export class BookController extends Controller {
@@ -42,6 +44,7 @@ export class BookController extends Controller {
     );
   }
 
+  
   @Patch("{id}")
   public async patchBook(
     @Path("id") id: number,
