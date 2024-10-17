@@ -8,7 +8,7 @@ export const checkPermissions = (resource: string, action: string) => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
-      return res.status(401).send("Authorization header missing");
+      return next(false);
     }
 
     const token = authHeader.split(" ")[1];
@@ -17,14 +17,11 @@ export const checkPermissions = (resource: string, action: string) => {
       const decodedToken: any = jwt.verify(token, JWT_SECRET);
       const userPermissions = decodedToken.permissions;
 
-      // Vérifier si l'utilisateur a les permissions nécessaires
-      if (userPermissions[resource]?.includes(action)) {
-        next();
-      } else {
-        return res.status(403).send("Forbidden: Insufficient permissions");
-      }
+      const hasPermission = userPermissions[resource]?.includes(action);
+
+      return next(hasPermission);
     } catch (error) {
-      return res.status(401).send("Invalid token");
+      return next(false);
     }
   };
 };
